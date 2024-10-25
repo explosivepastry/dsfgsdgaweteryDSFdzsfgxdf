@@ -114,17 +114,13 @@ if (array_key_exists($route, $all_pages)) {
     }
 
     if ($active_page['controllerBased']) {
-        $languageKey = "{$active_page['moduleSafeName']}Language";
-
         if (str_contains($route, 'queries')) {
             /** @var \NamelessMC\Framework\Queries\Query */
             $controller = $container->make($active_page['file']);
             $controller->handle();
         } elseif (str_contains($route, 'panel')) {
             /** @var \NamelessMC\Framework\Pages\PanelPage */
-            $controller = $container->make($active_page['file'], [
-                $languageKey => $container->get($languageKey),
-            ]);
+            $controller = $container->make($active_page['file']);
 
             if (!$user->handlePanelPageLoad($controller->permission())) {
                 require_once(ROOT_PATH . '/403.php');
@@ -154,19 +150,13 @@ if (array_key_exists($route, $all_pages)) {
             $frontendMiddlewares = $container->has('FrontendMiddleware') ? $container->get('FrontendMiddleware') : [];
             foreach ($frontendMiddlewares as $moduleName => $frontendMiddleware) {
                 /** @var \NamelessMC\Framework\Pages\Middleware $middleware */
-                $middleware = $container->make($frontendMiddleware, [
-                    $languageKey => $container->get($languageKey), // this should be the language key for the module that owns the middleware
-                ]);
+                $middleware = $container->make($frontendMiddleware);
                 $middleware->handle();
             }
 
             /** @var \NamelessMC\Framework\Pages\Page */
             $controller = $container->make($active_page['file'], [
                 'templatePagination' => $template_pagination,
-                 // TODO: php-di does not use parameter names to resolve entries (it uses the typed class names),
-                 // so if this is not provided it will use the root \Language class definition,
-                 // which is the Core language. we can possibly make modules use #[Inject]
-                $languageKey => $container->get($languageKey),
             ]);
             $controller->render();
             Module::loadPage($user, $pages, $cache, $smarty, [$navigation, $cc_nav, $staffcp_nav], $widgets, $template);

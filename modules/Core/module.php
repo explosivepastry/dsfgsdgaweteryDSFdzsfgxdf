@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Container\Container;
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/
@@ -551,7 +552,7 @@ class Core_Module extends Module {
         Email::addPlaceholder('[Thanks]', static fn(Language $viewing_language) => $viewing_language->get('emails', 'thanks'));
 
         // if (Util::isModuleEnabled('Members')) {
-            $memberListManager = self::$container->get('NamelessMC\Members\MemberListManager');
+            $memberListManager = Container::getInstance()->get('NamelessMC\Members\MemberListManager');
             $memberListManager->registerListProvider(new RegisteredMembersListProvider($language));
             $memberListManager->registerListProvider(new StaffMembersListProvider($language));
 

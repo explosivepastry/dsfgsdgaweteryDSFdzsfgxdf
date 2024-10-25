@@ -10,6 +10,7 @@
  */
 
 // Ensure module has been installed
+$cache->setCache('modulescache');
 $module_installed = $cache->retrieve('module_core');
 if (!$module_installed) {
     // Hasn't been installed

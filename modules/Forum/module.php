@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Container\Container;
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/
@@ -144,7 +145,7 @@ class Forum_Module extends Module {
         EventHandler::registerListener('renderPostEdit', 'ContentHook::replaceAnchors', 15);
 
         // if (Util::isModuleEnabled('Members')) {
-            $memberListManager = self::$container->get('NamelessMC\Members\MemberListManager');
+            $memberListManager = Container::getInstance()->get('NamelessMC\Members\MemberListManager');
             $memberListManager->registerListProvider(new MostPostsMemberListProvider($forum_language));
             $memberListManager->registerListProvider(new HighestForumReactionScoresMemberListProvider($forum_language));
 

@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Container\Container;
 class ComposerModuleWrapper extends Module
 {
     private string $_packageName;
@@ -115,7 +116,7 @@ class ComposerModuleWrapper extends Module
         }
 
         /** @var \NamelessMC\Framework\Debugging\DebugInfoProvider */
-        $provider = self::$container->make($this->_debugInfoProvider);
+        $provider = Container::getInstance()->make($this->_debugInfoProvider);
 
         return $provider->provide();
     }
@@ -172,7 +173,7 @@ class ComposerModuleWrapper extends Module
     {
         foreach ($hooks as $callback) {
             /** @var \NamelessMC\Framework\ModuleLifecycle\Hook $hook */
-            $hook = self::$container->make($callback);
+            $hook = Container::getInstance()->make($callback);
             $hook->execute();
         }
     }

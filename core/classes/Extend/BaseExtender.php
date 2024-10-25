@@ -1,7 +1,6 @@
 <?php
 
 namespace NamelessMC\Framework\Extend;
-use DI\Container;
 
 abstract class BaseExtender {
 
@@ -18,6 +17,6 @@ abstract class BaseExtender {
         return $this;
     }
 
-    abstract public function extend(Container $container): void;
+    abstract public function extend(\Illuminate\Container\Container $container): void;
 
 }

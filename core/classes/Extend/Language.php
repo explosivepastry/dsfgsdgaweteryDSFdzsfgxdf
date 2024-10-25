@@ -1,7 +1,7 @@
 <?php
 
 namespace NamelessMC\Framework\Extend;
-use DI\Container;
+use Illuminate\Container\Container;
 
 class Language extends BaseExtender {
 
@@ -14,8 +14,6 @@ class Language extends BaseExtender {
     public function extend(Container $container): void {
         $containerKey = "{$this->moduleName}Language";
 
-        $container->set($containerKey, function() {
-            return new \Language($this->path);
-        });
+        $container->bind($containerKey, fn () => new \Language($this->path));
     }
 }

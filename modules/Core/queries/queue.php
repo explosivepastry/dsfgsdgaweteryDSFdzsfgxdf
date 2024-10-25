@@ -3,7 +3,7 @@
  * Queue query runs any pending tasks
  *
  * @var Cache $cache
- * @var \DI\Container $container
+ * @var Illuminate\Container\Container $container
  * @var Navigation $cc_nav
  * @var Navigation $navigation
  * @var Navigation $staffcp_nav

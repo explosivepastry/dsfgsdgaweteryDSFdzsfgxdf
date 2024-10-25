@@ -8,7 +8,6 @@
             "php": "7.4"
         }
     },
-    "minimum-stability": "dev",
     "require": {
         "php": ">=7.4",
         "jdorn/sql-formatter": "^1.2.17",
@@ -33,7 +32,7 @@
         "joypixels/emoji-toolkit": "^7.0",
         "geoip2/geoip2": "^2.13",
         "jenssegers/agent": "^2.6",
-        "php-di/php-di": "^6.4",
+        "illuminate/container": "^8.0",
         "namelessmc/members-module": "dev-main",
         "namelessmc/cookie-consent-module": "dev-main"
     },

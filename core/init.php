@@ -80,9 +80,8 @@ if ($page != 'install') {
      * Initialise
      */
 
-    $container = new \DI\Container();
-    Module::$container = $container;
-    $container->set(Cache::class, function () {
+    $container = \Illuminate\Container\Container::getInstance();
+    $container->singleton(Cache::class, function () {
         return new Cache([
             'name' => 'nameless',
             'extension' => '.cache',
@@ -91,6 +90,9 @@ if ($page != 'install') {
     });
 
     $cache = $container->get(Cache::class);
+
+    $container->singleton(Smarty::class);
+    $container->singleton(Pages::class);
 
     // Friendly URLs?
     define('FRIENDLY_URLS', Config::get('core.friendly') == 'true');
@@ -236,11 +238,7 @@ if ($page != 'install') {
             define('LANGUAGE', $language[0]->short_code);
         }
     }
-    $coreLanguage = fn() => new Language('core', LANGUAGE);
-    $container->set(Language::class, $coreLanguage);
-    $container->set('coreLanguage', $coreLanguage);
-
-    $language = $container->get(Language::class);
+    $language = $container->instance(Language::class, new Language('core', LANGUAGE));
 
     // Site name
     $sitename = Settings::get('sitename');
@@ -396,8 +394,8 @@ if ($page != 'install') {
     $cc_nav = new Navigation();
     $staffcp_nav = new Navigation(true); // $staffcp_nav = panel nav
 
-    $container->set('FrontendNavigation', $navigation);
-    $container->set('PanelNavigation', $staffcp_nav);
+    $container->instance('FrontendNavigation', $navigation);
+    $container->instance('PanelNavigation', $staffcp_nav);
 
     // Add links to cc_nav
     $cc_nav->add('cc_overview', $language->get('user', 'overview'), URL::build('/user'));
@@ -462,6 +460,9 @@ if ($page != 'install') {
 
     $pages = $container->get(Pages::class);
 
+    // Load new modules
+    ComposerModuleDiscovery::bootModules($container, $enabled_modules, ComposerModuleDiscovery::discoverModules());
+
     // Sort by priority
     usort($enabled_modules, static function ($a, $b) {
         return $a['priority'] - $b['priority'];
@@ -480,9 +481,6 @@ if ($page != 'install') {
             require_once ROOT_PATH . '/modules/' . $module['name'] . '/init.php';
         }
     }
-
-    // Load new modules
-    ComposerModuleDiscovery::bootModules($container, $enabled_modules, ComposerModuleDiscovery::discoverModules());
 
     // Maintenance mode?
     if (Settings::get('maintenance') === '1') {

@@ -2,15 +2,15 @@
 
 namespace NamelessMC\Framework\Extend;
 
-use DI\Container as DIContainer;
+use Illuminate\Container\Container as IlluminateContainer;
 
 class Container extends BaseExtender {
 
     private $singletons = [];
 
-    public function extend(DIContainer $container): void {
+    public function extend(IlluminateContainer $container): void {
         foreach ($this->singletons as $class) {
-            $container->set($class, $container->get($class));
+            $container->singleton($class);
         }
     }
 

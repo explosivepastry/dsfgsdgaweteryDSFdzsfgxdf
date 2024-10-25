@@ -21,8 +21,6 @@ abstract class Module
     private array $_load_before;
     private array $_load_after;
 
-    public static \DI\Container $container;
-
     public function __construct(
         Module $module,
         string $name,

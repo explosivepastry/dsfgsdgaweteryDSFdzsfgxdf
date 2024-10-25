@@ -2,7 +2,7 @@
 
 namespace NamelessMC\Framework\Extend;
 
-use DI\Container;
+use Illuminate\Container\Container;
 
 class FrontendPages extends BaseExtender {
 

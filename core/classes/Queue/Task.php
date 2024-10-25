@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-use DI\Container;
+use Illuminate\Container\Container;
 
 abstract class Task
 {

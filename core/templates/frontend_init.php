@@ -62,7 +62,7 @@ if (file_exists(ROOT_PATH . '/custom/templates/' . TEMPLATE . '/template.php')) 
     require(ROOT_PATH . '/custom/templates/DefaultRevamp/template.php');
 }
 
-$container->set(TemplateBase::class, $template);
+$container->instance(TemplateBase::class, $template);
 
 foreach (Module::getModules() as $module) {
     // TODO needs enabled check

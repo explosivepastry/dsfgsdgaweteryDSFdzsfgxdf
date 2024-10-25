@@ -29,7 +29,7 @@ class ComposerModuleDiscovery
      * @param array $allEnabledModules
      * @param ComposerModuleWrapper[] $composerModules
      */
-    public static function bootModules(\DI\Container $container, array $allEnabledModules, array $composerModules): void
+    public static function bootModules(\Illuminate\Container\Container $container, array $allEnabledModules, array $composerModules): void
     {
         foreach ($composerModules as $composerModule)  {
             if (!in_array($composerModule->getName(), array_column($allEnabledModules, 'name'))) {
@@ -40,7 +40,7 @@ class ComposerModuleDiscovery
         }
     }
 
-    public static function bootModule(\DI\Container $container, ComposerModuleWrapper $composerModule): void
+    public static function bootModule(\Illuminate\Container\Container $container, ComposerModuleWrapper $composerModule): void
     {
         /** @var NamelessMC\Framework\Extend\BaseExtender[] $extenders */
         $extenders = require_once ROOT_PATH . '/vendor/' . $composerModule->getPackageName() . '/module.php';

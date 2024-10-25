@@ -1,22 +1,23 @@
 <?php
 
 namespace NamelessMC\Framework\Extend;
+use Illuminate\Container\Container;
 
 class FrontendMiddleware extends BaseExtender
 {
     private array $middlewares = [];
 
-    public function extend(\DI\Container $container): void
+    public function extend(Container $container): void
     {
         if ($container->has('FrontendMiddleware')) {
             $middlewares = $container->get('FrontendMiddleware');
         } else {
-            $container->set('FrontendMiddleware', $middlewares = []);
+            $middlewares = $container->instance('FrontendMiddleware', []);
         }
 
         $middlewares = array_merge($middlewares, $this->middlewares);
 
-        $container->set('FrontendMiddleware', $middlewares);
+        $container->instance('FrontendMiddleware', $middlewares);
     }
 
     public function register(string $middleware): self

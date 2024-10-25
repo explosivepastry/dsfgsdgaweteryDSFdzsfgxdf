@@ -2,7 +2,7 @@
 
 namespace NamelessMC\Framework\Extend;
 
-use DI\Container;
+use Illuminate\Container\Container;
 
 class Events extends BaseExtender {
 
@@ -11,7 +11,7 @@ class Events extends BaseExtender {
     public function extend(Container $container): void {
         foreach ($this->listeners as $event => $listeners) {
             foreach ($listeners as $listener) {
-                \EventHandler::registerListener($event, $listener, 10, $container);
+                \EventHandler::registerListener($event, $listener, 10);
             }
         }
     }

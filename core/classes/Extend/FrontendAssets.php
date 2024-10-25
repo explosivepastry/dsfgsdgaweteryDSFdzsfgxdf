@@ -2,7 +2,7 @@
 
 namespace NamelessMC\Framework\Extend;
 
-use DI\Container;
+use Illuminate\Container\Container;
 
 class FrontendAssets extends BaseExtender {
 
@@ -16,7 +16,7 @@ class FrontendAssets extends BaseExtender {
         if ($container->has('FrontendAssets')) {
             $frontendAssets = $container->get('FrontendAssets');
         } else {
-            $container->set('FrontendAssets', $frontendAssets = []);
+            $frontendAssets = $container->instance('FrontendAssets', []);
         }
 
         // merge in global assets
@@ -40,7 +40,7 @@ class FrontendAssets extends BaseExtender {
             $frontendAssets['cssFiles'][$page] = array_merge($frontendAssets['cssFiles'][$page], $files);
         }
 
-        $container->set('FrontendAssets', $frontendAssets);
+        $container->instance('FrontendAssets', $frontendAssets);
     }
 
     public function js(string $path, array $pages = []): self {

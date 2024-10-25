@@ -1,6 +1,7 @@
 <?php
 
 namespace NamelessMC\Framework\Extend;
+use Illuminate\Container\Container;
 
 class ModuleLifecycle extends BaseExtender
 {
@@ -9,7 +10,7 @@ class ModuleLifecycle extends BaseExtender
     private array $onDisable = [];
     private array $onUninstall = [];
 
-    public function extend(\DI\Container $container): void {
+    public function extend(Container $container): void {
         $this->module->setOnInstall($this->onInstall);
         $this->module->setOnEnable($this->onEnable);
         $this->module->setOnDisable($this->onDisable);

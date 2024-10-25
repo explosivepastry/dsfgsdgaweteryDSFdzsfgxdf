@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Container\Container;
 /**
  * Handles registering and triggering events.
  *
@@ -86,7 +87,7 @@ class EventHandler
      * @param callable|class-string $callback Listener callback to execute when event is executed. If class name is provided, we will assume there is a static "execute" method on the class.
      * @param int                   $priority Execution priority - higher gets executed first
      */
-    public static function registerListener(string $event, $callback, int $priority = 10, \DI\Container $container = null): void
+    public static function registerListener(string $event, $callback, int $priority = 10): void
     {
         $name = class_exists($event) && is_subclass_of($event, AbstractEvent::class)
             ? $event::name()
@@ -106,7 +107,7 @@ class EventHandler
                 // when it's here, modules can't do things in their constructor such as setting
                 // the cache location since it could get overwritten by any code that sets cache between
                 // this and when the listener is actually called
-                $callback = [$container->make($callback), 'handle'];
+                $callback = [Container::getInstance()->make($callback), 'handle'];
             }
         }
 
