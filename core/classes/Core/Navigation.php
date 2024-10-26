@@ -24,6 +24,8 @@ class Navigation
      */
     private bool $_panel;
 
+    private array $_preloaded_dropdowns = [];
+
     public function __construct(bool $panel = false)
     {
         $this->_panel = $panel;
@@ -130,15 +132,28 @@ class Navigation
     public function addItemToDropdown(string $dropdown, string $name, string $title, string $link, string $location = 'top', string $target = null, string $icon = '', int $order = 10): void
     {
         // Add the item
-        if ($location == 'top' && isset($this->_topNavbar[$dropdown])) {
-            // Navbar
-            $this->_topNavbar[$dropdown]['items'][$name] = [
-                'title' => $title,
-                'link' => $link,
-                'target' => $target,
-                'icon' => $icon,
-                'order' => $order,
-            ];
+        if ($location == 'top') {
+            if (isset($this->_topNavbar[$dropdown])) {
+                // Navbar
+                $this->_topNavbar[$dropdown]['items'][$name] = [
+                    'title' => $title,
+                    'link' => $link,
+                    'target' => $target,
+                    'icon' => $icon,
+                    'order' => $order,
+                ];
+            } else {
+                // Dropdown not found
+                if (!isset($this->_preloaded_dropdowns[$dropdown])) {
+                    $this->_preloaded_dropdowns[$dropdown]['items'][$name] = [
+                        'title' => $title,
+                        'link' => $link,
+                        'items' => [],
+                        'icon' => $icon,
+                        'order' => $order,
+                    ];
+                }
+            }
         } elseif (isset($this->_footerNav[$dropdown])) {
             // Footer
             $this->_footerNav[$dropdown]['items'][$name] = [
@@ -159,6 +174,15 @@ class Navigation
      */
     public function returnNav(string $location = 'top'): array
     {
+        // merge preloaded dropdowns
+        foreach ($this->_preloaded_dropdowns as $key => $dropdown) {
+            if ($location == 'top') {
+                if (isset($this->_topNavbar[$key])) {
+                    $this->_topNavbar[$key]['items'] = array_merge($this->_topNavbar[$key]['items'], $dropdown['items']);
+                }
+            }
+        }
+
         $return = []; // String to return
         if ($location == 'top') {
             if (count($this->_topNavbar)) {

@@ -183,7 +183,7 @@ if (!isset($_GET['action'])) {
             }
         }
 
-        if ($widget_instance->getSettings() !== null) {
+        if ($widget_instance instanceof HasWidgetSettings || $widget_instance->getSettings() !== null) {
             $smarty->assign([
                 'SETTINGS' => $language->get('admin', 'settings'),
                 'SETTINGS_LINK' => URL::build('/panel/core/widgets/', 'action=settings&w=' . urlencode($widget->id)),

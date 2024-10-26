@@ -93,6 +93,8 @@ if ($page != 'install') {
 
     $container->singleton(Smarty::class);
     $container->singleton(Pages::class);
+    $container->singleton(Widgets::class);
+    $container->singleton(Endpoints::class);
 
     // Friendly URLs?
     define('FRIENDLY_URLS', Config::get('core.friendly') == 'true');

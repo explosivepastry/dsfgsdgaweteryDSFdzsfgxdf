@@ -70,8 +70,9 @@ if (!isset($_GET['integration'])) {
         Redirect::to(URL::build('/panel/core/integrations'));
     }
 
+    $errors = [];
+
     if (Input::exists()) {
-        $errors = [];
 
         if (Token::check()) {
             if (Input::get('action') === 'general_settings') {

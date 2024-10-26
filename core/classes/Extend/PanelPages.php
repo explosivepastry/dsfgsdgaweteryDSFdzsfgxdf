@@ -64,7 +64,7 @@ class PanelPages extends BaseExtender {
     
                     if ($user->hasPermission($page['permission'])) {
                         $icon = "<i class='nav-icon {$page['icon']}'></i>";
-                        $panelNavigation->addItemToDropdown($dropdownName, $page['name'], $title, \URL::build($path), 'top', null, $icon, $order);
+                        $panelNavigation->addItemToDropdown($dropdownName, $page['name'], $title, \URL::build($path), 'top', null, $icon, 3);
                     }
 
                     $this->registerInternalPage($pages, $path, $page['handler'], $title);

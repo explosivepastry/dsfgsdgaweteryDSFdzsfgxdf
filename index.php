@@ -134,7 +134,7 @@ if (array_key_exists($route, $all_pages)) {
             define('PAGE', 'panel');
             define('PARENT_PAGE', $controller->parentPage() ?? $active_page['moduleSafeName']);
             define('PANEL_PAGE', $controller->pageName());
-            $smarty->assign(['TITLE' => $active_page['name'], 'PAGE' => $controller->pageName()]);
+            $smarty->assign(['TITLE' => $active_page['name'], 'PAGE' => $controller->pageName(), 'PARENT_PAGE' => $controller->parentPage() ?? $active_page['moduleSafeName']]);
             $template->onPageLoad();
             require(ROOT_PATH . '/core/templates/panel_navbar.php');
             return $template->displayTemplate($controller->viewFile(), $smarty);
