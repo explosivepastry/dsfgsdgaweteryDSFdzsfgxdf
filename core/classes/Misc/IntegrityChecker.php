@@ -21,9 +21,7 @@ class IntegrityChecker
     const INCLUDED_PATHS = [
         'cache/.htaccess',
         'templates/DefaultRevamp',
-        'modules/Cookie Consent',
         'modules/Core',
-        'modules/Discord Integration',
         'modules/Forum',
     ];
 

@@ -23,30 +23,30 @@ class FrontendPages extends BaseExtender {
 
         foreach ($this->pages as $page) {
             $path = $page['path'];
-            $pageName = $page['name'];
-            $pageFriendlyName = $moduleLanguage->get($page['friendly_name_translation']);
+            $name = $page['name'];
+            $title = $moduleLanguage->get($page['title_translation']);
 
             $cache->setCache('navbar_order');
-            $pageOrder = $cache->fetch("{$pageName}_order", fn () => 5);
+            $order = $cache->fetch("{$name}_order", fn () => 5);
     
             $cache->setCache('navbar_icons');
-            $pageIcon = $cache->fetch("{$pageName}_icon", fn () => '');
+            $icon = $cache->fetch("{$name}_icon", fn () => '');
 
             $cache->setCache('nav_location');
-            $pageLocation = $cache->fetch("{$pageName}_location", fn () => 1);
+            $location = $cache->fetch("{$name}_location", fn () => 1);
 
-            switch ($pageLocation) {
+            switch ($location) {
                 case 1:
                     // Navbar
-                    $frontendNavigation->add($pageName, $pageFriendlyName, \URL::build($path), 'top', null, $pageOrder, $pageIcon);
+                    $frontendNavigation->add($name, $title, \URL::build($path), 'top', null, $order, $icon);
                     break;
                 case 2:
                     // "More" dropdown
-                    $frontendNavigation->addItemToDropdown('more_dropdown', $pageName, $pageFriendlyName, \URL::build($path), 'top', null, $pageIcon, $pageOrder);
+                    $frontendNavigation->addItemToDropdown('more_dropdown', $name, $title, \URL::build($path), 'top', null, $icon, $order);
                     break;
                 case 3:
                     // Footer
-                    $frontendNavigation->add($pageName, $pageFriendlyName, \URL::build($path), 'footer', null, $pageOrder, $pageIcon);
+                    $frontendNavigation->add($name, $title, \URL::build($path), 'footer', null, $order, $icon);
                     break;
             }    
 
@@ -54,20 +54,20 @@ class FrontendPages extends BaseExtender {
                 $this->moduleDisplayName,
                 $path,
                 $page['handler'],
-                $pageFriendlyName,
+                $title,
                 $page['allowWidgets'],
                 $this->moduleName,
                 true,
-                $pageName,
+                $name,
             );
         }
     }
 
-    public function register(string $path, string $name, string $friendlyNameTranslation, string $handler, bool $allowWidgets): FrontendPages {
+    public function register(string $path, string $name, string $titleTranslation, string $handler, bool $allowWidgets): FrontendPages {
         $this->pages[] = [
             'path' => $path,
             'name' => $name,
-            'friendly_name_translation' => $friendlyNameTranslation,
+            'title_translation' => $titleTranslation,
             'handler' => $handler,
             'allowWidgets' => $allowWidgets
         ];

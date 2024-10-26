@@ -522,7 +522,7 @@ if ($page != 'install') {
                     }
 
                     // TODO: more extendable webhook system, #2676
-                    if ($hook->action == 2 && !class_exists(DiscordHook::class)) {
+                    if ($hook->action == 2 && !class_exists(\NamelessMC\DiscordIntegration\DiscordHook::class)) {
                         continue;
                     }
 
@@ -531,7 +531,7 @@ if ($page != 'install') {
                         'url' => Output::getClean($hook->url),
                         'action' => $hook->action == 1
                             ? [WebHook::class, 'execute']
-                            : [DiscordHook::class, 'execute'],
+                            : [\NamelessMC\DiscordIntegration\DiscordHook::class, 'execute'],
                         'events' => json_decode($hook->events, true),
                     ];
                 }

@@ -6,12 +6,10 @@ then
 fi
 
 UNUSED_TERMS_FOUND=false
+# TODO: make this a reusable action for the module specific repos as well
 FILES=(
   "modules/Core/language/en_UK.json"
   "modules/Forum/language/en_UK.json"
-  "modules/Cookie Consent/language/en_UK.json"
-  "modules/Discord Integration/language/en_UK.json"
-  "modules/Members/language/en_UK.json"
 )
 # terms which are too tricky to detect, or are used in a different way
 WHITELISTED_TERMS=(

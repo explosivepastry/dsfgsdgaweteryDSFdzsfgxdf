@@ -106,7 +106,13 @@ if (!isset($_GET['integration'])) {
         }
     }
 
-    if ($integration->getSettings() !== null) {
+    if ($integration instanceof HasIntegrationSettings) {
+        $integration->handleSettingsRequest(
+            $smarty,
+            $language,
+            $errors,
+        );
+    } else if ($integration->getSettings() !== null) {
         if (file_exists($integration->getSettings())) {
             require_once($integration->getSettings());
         } else {

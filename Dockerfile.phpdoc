@@ -8,10 +8,7 @@ RUN mkdir /target && \
     phpdoc run \
         -d 'core/classes' \
         -d 'modules/Core/classes' \
-        -d 'modules/Discord Integration/classes' \
-        -d 'modules/Cookie Consent/classes' \
         -d 'modules/Forum/classes' \
-        -d 'modules/Members/classes' \
         -i vendor \
         -t /target
 

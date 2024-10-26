@@ -132,7 +132,7 @@ if (array_key_exists($route, $all_pages)) {
             $controller->render();
             Module::loadPage($user, $pages, $cache, $smarty, [$navigation, $cc_nav, $staffcp_nav], $widgets, $template);
             define('PAGE', 'panel');
-            define('PARENT_PAGE', $active_page['moduleSafeName']);
+            define('PARENT_PAGE', $controller->parentPage() ?? $active_page['moduleSafeName']);
             define('PANEL_PAGE', $controller->pageName());
             $smarty->assign(['TITLE' => $active_page['name'], 'PAGE' => $controller->pageName()]);
             $template->onPageLoad();

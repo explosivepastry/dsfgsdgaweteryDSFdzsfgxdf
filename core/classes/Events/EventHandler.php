@@ -253,7 +253,7 @@ class EventHandler
      * Not used internally, currently for WebSend.
      *
      * @param string $event Name of event to get data for.
-     * @returns array Event data.
+     * @return array Event data.
      */
     public static function getEvent(string $event): array
     {

@@ -231,11 +231,15 @@ if (!isset($_GET['action'])) {
             $widget = $widget[0];
             $widget_instance = $widgets->getWidget($widget->name);
 
-            if ($widget_instance->getSettings() === null || !file_exists($widget_instance->getSettings())) {
-                Redirect::to(URL::build('/admin/widgets'));
+            if ($widget_instance instanceof HasWidgetSettings) {
+                $widget_instance->handleSettingsRequest($cache, $smarty, $language, $success, $errors);
+            } else if ($widget_instance->getSettings() !== null) {
+                if (file_exists($widget_instance->getSettings())) {
+                    require_once($widget_instance->getSettings());
+                } else {
+                    Redirect::to(URL::build('/admin/widgets'));
+                }
             }
-
-            require_once($widget_instance->getSettings());
 
             $smarty->assign([
                 'EDITING_WIDGET' => $language->get('admin', 'editing_widget_x', [

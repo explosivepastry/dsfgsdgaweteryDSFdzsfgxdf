@@ -34,7 +34,8 @@
         "jenssegers/agent": "^2.6",
         "illuminate/container": "^8.0",
         "namelessmc/members-module": "dev-main",
-        "namelessmc/cookie-consent-module": "dev-main"
+        "namelessmc/cookie-consent-module": "dev-main",
+        "namelessmc/discord-integration-module": "dev-main"
     },
     "require-dev": {
         "phpstan/phpstan": "1.6.9",
@@ -49,9 +50,6 @@
             "modules/Core/classes",
             "modules/Core/hooks",
             "modules/Core/widgets",
-            "modules/Discord Integration/classes",
-            "modules/Discord Integration/hooks",
-            "modules/Discord Integration/widgets",
             "modules/Forum/classes",
             "modules/Forum/hooks",
             "modules/Forum/widgets"

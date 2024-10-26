@@ -112,20 +112,25 @@ class Endpoints
 
             $endpoint_class_name = str_replace('.php', '', $file->getFilename());
 
-            try {
-                /** @var EndpointBase $endpoint */
-                $endpoint = new $endpoint_class_name();
+            $this->loadEndpoint($endpoint_class_name);
+        }
+    }
 
-                $key = $endpoint->getRoute() . '-' . $endpoint->getMethod();
+    public function loadEndpoint(string $endpoint): void
+    {
+        try {
+            /** @var EndpointBase $endpoint */
+            $endpoint = new $endpoint();
 
-                if (!isset($this->_endpoints[$key])) {
-                    $this->_endpoints[$key] = $endpoint;
-                }
-            } catch (Error $error) {
-                // Silently ignore errors caused by invalid endpoint files,
-                // but make a log entry for debugging purposes.
-                ErrorHandler::logCustomError($error->getMessage());
+            $key = $endpoint->getRoute() . '-' . $endpoint->getMethod();
+
+            if (!isset($this->_endpoints[$key])) {
+                $this->_endpoints[$key] = $endpoint;
             }
+        } catch (Error $error) {
+            // Silently ignore errors caused by invalid endpoint files,
+            // but make a log entry for debugging purposes.
+            ErrorHandler::logCustomError($error->getMessage());
         }
     }
 }

@@ -65,7 +65,7 @@ abstract class IntegrationBase
     /**
      * Get the settings path for this integration.
      *
-     * @return string Integration settings path.
+     * @return string Integration settings path or class name.
      */
     public function getSettings(): ?string
     {
